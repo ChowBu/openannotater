@@ -1,0 +1,24 @@
+{
+  "name": "openannotater",
+  "version": "0.0.1",
+  "description": "a tool to anotate pcd pointcloud  file ",
+  "main": "sw.js",
+  "directories": {
+    "doc": "docs",
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "annotate",
+    "pointcloud",
+    "pcd",
+    "lable"
+  ],
+  "author": "ChowBu",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "three": "^0.140.2"
+  }
+}
