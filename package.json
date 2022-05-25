@@ -8,6 +8,7 @@
     "example": "examples"
   },
   "scripts": {
+    "dev": "servez -p 8081",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -20,5 +21,8 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "three": "^0.140.2"
+  },
+  "devDependencies": {
+    "servez": "^1.14.1"
   }
 }
