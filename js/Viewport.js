@@ -744,6 +744,7 @@ function Viewport( editor ) {
 			renderer.autoClear = false;
 			if ( showSceneHelpers === true ) renderer.render( sceneHelpers, camera );
 			// if ( vr.currentSession === null ) viewHelper.render( renderer );
+			viewHelper.render( renderer );
 			renderer.autoClear = true;
 
 		}
