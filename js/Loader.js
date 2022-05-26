@@ -91,6 +91,7 @@ function Loader( editor ) {
 	
 						const points = new PCDLoader().parse( contents );
 						points.name = filename;
+						points.material.size = 0.1;
 	
 						editor.execute( new AddObjectCommand( editor, points ) );
 	
