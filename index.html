@@ -30,7 +30,6 @@
 
 			import { Editor } from './js/Editor.js';
 			import { Viewport } from './js/Viewport.js';
-			import { Toolbar } from './js/Toolbar.js';
 			import { Sidebar } from './js/Sidebar.js';
 			import { Menubar } from './js/Menubar.js';
 			import { Resizer } from './js/Resizer.js';
@@ -53,11 +52,6 @@
 
 			const viewport = new Viewport( editor );
 			document.body.appendChild( viewport.dom );
-
-			const toolbar = new Toolbar( editor );
-			document.body.appendChild( toolbar.dom );
-
-
 
 			const sidebar = new Sidebar( editor );
 			document.body.appendChild( sidebar.dom );
