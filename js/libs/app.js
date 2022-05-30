@@ -9,7 +9,7 @@ var APP = {
 		var loader = new THREE.ObjectLoader();
 		var camera, scene;
 
-		var vrButton = VRButton.createButton( renderer ); // eslint-disable-line no-undef
+		// var vrButton = VRButton.createButton( renderer ); // eslint-disable-line no-undef
 
 		var events = {};
 
@@ -171,7 +171,7 @@ var APP = {
 
 		this.play = function () {
 
-			if ( renderer.xr.enabled ) dom.append( vrButton );
+			// if ( renderer.xr.enabled ) dom.append( vrButton );
 
 			startTime = prevTime = performance.now();
 
@@ -189,7 +189,7 @@ var APP = {
 
 		this.stop = function () {
 
-			if ( renderer.xr.enabled ) vrButton.remove();
+			// if ( renderer.xr.enabled ) vrButton.remove();
 
 			document.removeEventListener( 'keydown', onKeyDown );
 			document.removeEventListener( 'keyup', onKeyUp );
