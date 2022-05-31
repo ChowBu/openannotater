@@ -32,7 +32,6 @@
 			import { Viewport } from './js/Viewport.js';
 			import { Sidebar } from './js/Sidebar.js';
 			import { Menubar } from './js/Menubar.js';
-			import { Resizer } from './js/Resizer.js';
 
 			window.URL = window.URL || window.webkitURL;
 			window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
@@ -59,8 +58,8 @@
 			const menubar = new Menubar( editor );
 			document.body.appendChild( menubar.dom );
 
-			const resizer = new Resizer( editor );
-			document.body.appendChild( resizer.dom );
+			// const resizer = new Resizer( editor );
+			// document.body.appendChild( resizer.dom );
 
 			
 
@@ -199,17 +198,17 @@
 
 			// ServiceWorker
 
-			if ( 'serviceWorker' in navigator ) {
+			// if ( 'serviceWorker' in navigator ) {
 
-				try {
+			// 	try {
 
-					navigator.serviceWorker.register( 'sw.js' );
+			// 		navigator.serviceWorker.register( 'sw.js' );
 
-				} catch ( error ) {
+			// 	} catch ( error ) {
 
-				}
+			// 	}
 
-			}
+			// }
 
 		</script>
 	</body>
