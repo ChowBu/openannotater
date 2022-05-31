@@ -4,7 +4,8 @@ import { TransformControls } from './libs/TransformControls.js';
 
 import { UIPanel } from './libs/ui.js';
 
-import { EditorControls } from './EditorControls.js';
+// import { EditorControls } from './EditorControls.js';
+import { OrbitControls as EditorControls } from './libs/OrbitControls.js';
 
 import { ViewportCamera } from './Viewport.Camera.js';
 import { ViewportInfo } from './Viewport.Info.js';
