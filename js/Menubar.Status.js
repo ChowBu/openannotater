@@ -10,22 +10,22 @@ function MenubarStatus( editor ) {
 	const container = new UIPanel();
 	container.setClass( 'menu right' );
 
-	const autosave = new UIBoolean( editor.config.getKey( 'autosave' ), strings.getKey( 'menubar/status/autosave' ) );
-	autosave.text.setColor( '#888' );
-	autosave.onChange( function () {
+	// const autosave = new UIBoolean( editor.config.getKey( 'autosave' ), strings.getKey( 'menubar/status/autosave' ) );
+	// autosave.text.setColor( '#888' );
+	// autosave.onChange( function () {
 
-		const value = this.getValue();
+	// 	const value = this.getValue();
 
-		editor.config.setKey( 'autosave', value );
+	// 	editor.config.setKey( 'autosave', value );
 
-		if ( value === true ) {
+	// 	if ( value === true ) {
 
-			editor.signals.sceneGraphChanged.dispatch();
+	// 		editor.signals.sceneGraphChanged.dispatch();
 
-		}
+	// 	}
 
-	} );
-	container.add( autosave );
+	// } );
+	// container.add( autosave );
 
 	editor.signals.savingStarted.add( function () {
 
