@@ -4,8 +4,7 @@ import { TransformControls } from './libs/TransformControls.js';
 
 import { UIPanel } from './libs/ui.js';
 
-// import { EditorControls } from './EditorControls.js';
-import { OrbitControls as EditorControls } from './libs/OrbitControls.js';
+import { EditorControls } from './EditorControls.js';
 
 import { ViewportCamera } from './Viewport.Camera.js';
 import { ViewportInfo } from './Viewport.Info.js';
@@ -320,7 +319,8 @@ function Viewport( editor ) {
 
 	signals.editorCleared.add( function () {
 
-		controls.center.set( 0, 0, 0 );
+		controls.target.set( 0, 0, 0 );
+		// controls.center.set( 0, 0, 0 );
 		render();
 
 	} );

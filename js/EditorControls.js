@@ -93,7 +93,16 @@ function EditorControls( object, domElement ) {
 
 	this.rotate = function ( delta ) {
 
+		/**
+		 * 参考Orbitrols,升级EditControls,让其能够实现绕相机up旋转
+		 */
+		var quat = new THREE.Quaternion().setFromUnitVectors( object.up, new THREE.Vector3( 0, 1, 0 ) );
+		var quatInverse = quat.clone().invert();
+
+		//相机的位置减去中心
 		vector.copy( object.position ).sub( center );
+
+		vector.applyQuaternion( quat );
 
 		spherical.setFromVector3( vector );
 
@@ -103,6 +112,8 @@ function EditorControls( object, domElement ) {
 		spherical.makeSafe();
 
 		vector.setFromSpherical( spherical );
+
+		vector.applyQuaternion( quatInverse );
 
 		object.position.copy( center ).add( vector );
 

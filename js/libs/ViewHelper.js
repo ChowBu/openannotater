@@ -162,7 +162,7 @@ class ViewHelper extends THREE.Object3D {
 				const intersection = intersects[ 0 ];
 				const object = intersection.object;
 
-				prepareAnimationData( object, this.controls.target );
+				prepareAnimationData( object, this.controls.target || this.controls.center );
 
 				this.animating = true;
 
@@ -179,7 +179,7 @@ class ViewHelper extends THREE.Object3D {
 		this.update = function ( delta ) {
 
 			const step = delta * turnRate;
-			const focusPoint = this.controls.target;
+			const focusPoint = this.controls.target || this.controls.center;
 
 			// animate position by doing a slerp and then scaling the position on the unit sphere
 
