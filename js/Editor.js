@@ -27,6 +27,11 @@ function Editor() {
 		startPlayer: new Signal(),
 		stopPlayer: new Signal(),
 
+		// annotate
+
+		startAnnotate: new Signal(),
+		stopAnnotate: new Signal(),
+
 		// vr
 
 		toggleVR: new Signal(),
@@ -118,6 +123,8 @@ function Editor() {
 
 	this.cameras = {};
 	this.viewportCamera = this.camera;
+
+	this.renderer = null;
 
 	this.addCamera( this.camera );
 
