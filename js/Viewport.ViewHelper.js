@@ -11,6 +11,7 @@ class ViewHelper extends ViewHelperBase {
 		const panel = new UIPanel();
 		panel.setId( 'viewHelper' );
 		panel.setPosition( 'absolute' );
+		panel.setZIndex( '99' );
 		panel.setRight( '0px' );
 		panel.setBottom( '0px' );
 		panel.setHeight( '128px' );
