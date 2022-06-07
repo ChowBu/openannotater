@@ -34,6 +34,7 @@ function Strings( config ) {
 			'menubar/edit/fixcolormaps': 'Fix Color Maps',
 
 			'menubar/add': 'Add',
+			'menubar/add/cancel': 'Cancel',
 			'menubar/add/group': 'Group',
 			'menubar/add/plane': 'Plane',
 			'menubar/add/box': 'Box',
@@ -371,6 +372,7 @@ function Strings( config ) {
 			'menubar/edit/fixcolormaps': 'Correction des couleurs',
 
 			'menubar/add': 'Ajouter',
+			'menubar/add/cancel': 'Annulation',
 			'menubar/add/group': 'Groupe',
 			'menubar/add/plane': 'Plan',
 			'menubar/add/box': 'Cube',
@@ -708,6 +710,7 @@ function Strings( config ) {
 			'menubar/edit/fixcolormaps': '修复颜色贴图',
 
 			'menubar/add': '添加',
+			'menubar/add/cancel': '取消',
 			'menubar/add/group': '组',
 			'menubar/add/plane': '平面',
 			'menubar/add/box': '正方体',
