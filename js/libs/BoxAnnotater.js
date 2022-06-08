@@ -4,6 +4,7 @@ import {
 } from 'three';
 
 import { UIElement } from './ui.js';
+import { intersectionBy } from '../libs/utils.js';
 
 class BoxAnnotater extends EventDispatcher {
 
@@ -13,9 +14,6 @@ class BoxAnnotater extends EventDispatcher {
         this.editor = editor;
         this.signals = editor.signals;
         this.renderer = editor.renderer;
-
-        this.enabled = true;
-        this.enable = true;
 
         this.width = this.renderer.domElement.offsetWidth;
         this.height = this.renderer.domElement.offsetHeight;
@@ -29,6 +27,9 @@ class BoxAnnotater extends EventDispatcher {
         this.screenPositionArray = [];
 
         this.tempVector3 = new Vector3(0, 0, 0);
+
+        this.enabled = true;
+        this.enable = true;
 
         this.canvas.dom.addEventListener('mousedown',( e ) => {
 
@@ -44,11 +45,11 @@ class BoxAnnotater extends EventDispatcher {
                     if( this.screenPositionArray.length > 0 ){
 
                         const endPos = this.screenPositionArray[this.screenPositionArray.length - 1];
-                        this.drawLine(endPos[0], endPos[1], x, y );
+                        this.drawLine(endPos.x, endPos.y, x, y );
 
                     }
     
-                    this.screenPositionArray.push( [x, y] );
+                    this.screenPositionArray.push( { x, y } );
 
                  /**
                  * right mouse button clicked
@@ -56,7 +57,24 @@ class BoxAnnotater extends EventDispatcher {
                 } else if( e.button === 2 ){
                     const startPos = this.screenPositionArray[0];
                     const endPos = this.screenPositionArray[this.screenPositionArray.length - 1];
-                    this.drawLine(endPos[0], endPos[1], startPos[0], startPos[1] );
+                    this.drawLine(endPos.x, endPos.y, startPos.x, startPos.y );
+                    
+                    if( this.screenPositionArray.length > 2 ){
+
+                        const points2dInScreen = this.get2DPointsInScreen();
+                        const selectedPoints = [];
+                        points2dInScreen.forEach( ( point ) => {
+                            const isInside = this.isPointInPolygon( point, this.screenPositionArray );
+                            
+                            if( isInside ){
+                                selectedPoints.push( point );
+                            }
+
+                        } );
+                        const selectedPoints3D = this.get3DPointsFrom2DPoints( this.pointCloudPositionInWorld, points2dInScreen );
+                                                
+
+                    }
                 }
 
             } 
@@ -192,15 +210,20 @@ class BoxAnnotater extends EventDispatcher {
             point3D.forEach( ( point ) => {
                 if( frustum.containsPoint( point ) ){
                     const point2d = this.pointsInWorldToScreen( point, camera, {height: this.height, width: this.width} );
-                    point2d.i = point.i;
+                    point2d.index = point.index;
                     reusult.push(point2d);
                 }
             } );
         }
         return reusult;
     }
-    get3DPointsInScreen(){
-
+    get3DPointsFrom2DPoints(pointsOf3d, pointsOf2d){
+        let intersects = [];
+        if( Array.isArray( pointsOf2d ) && Array.isArray( pointsOf3d )){
+            intersects = intersectionBy(pointsOf3d, pointsOf2d, (point) => point.index);
+        }
+        intersects
+        return intersects;
     }
     pointsInWorldToScreen( point, camera, plane ){
         this.tempVector3.x = point.x;
@@ -216,7 +239,7 @@ class BoxAnnotater extends EventDispatcher {
     isPointInPolygon( point, polygon ){
 
         let inside = false;
-        const { x,y } = point;
+        const { x, y } = point;
         for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
             const xi = polygon[i].x;
             const yi = polygon[i].y;
@@ -230,6 +253,9 @@ class BoxAnnotater extends EventDispatcher {
             }
         }
         return inside;
+
+    }
+    hightLightPoints(){
 
     }
     clear(){
