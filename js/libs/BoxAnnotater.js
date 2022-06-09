@@ -79,7 +79,7 @@ class BoxAnnotater extends EventDispatcher {
 
                         } );
 
-                        const selectedPoints3D = this.get3DPointsFrom2DPoints( this.pointCloudPositionInWorld, points2dInScreen );
+                        const selectedPoints3D = this.get3DPointsFrom2DPoints( this.pointCloudPositionInWorld, selectedPoints );
                         
                         if( selectedPoints3D.length > 1 ){
                             const bbox = this.getBBoxBySelectedPoints( selectedPoints3D );
