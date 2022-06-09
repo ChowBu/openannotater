@@ -1,10 +1,17 @@
 
 import {
-    EventDispatcher, Vector3, Vector2, Frustum, Matrix4
+    EventDispatcher, 
+    Vector3, 
+    Vector2, 
+    Frustum, 
+    Matrix4, 
+    BoxHelper, 
+    BufferGeometry
 } from 'three';
 
 import { UIElement } from './ui.js';
-import { intersectionBy } from '../libs/utils.js';
+import { intersectionBy, minBy, maxBy } from '../libs/utils.js';
+import { AddObjectCommand } from '../Commands/AddObjectCommand.js';
 
 class BoxAnnotater extends EventDispatcher {
 
@@ -64,16 +71,23 @@ class BoxAnnotater extends EventDispatcher {
                         const points2dInScreen = this.get2DPointsInScreen();
                         const selectedPoints = [];
                         points2dInScreen.forEach( ( point ) => {
+                        
                             const isInside = this.isPointInPolygon( point, this.screenPositionArray );
-                            
                             if( isInside ){
                                 selectedPoints.push( point );
                             }
 
                         } );
-                        const selectedPoints3D = this.get3DPointsFrom2DPoints( this.pointCloudPositionInWorld, points2dInScreen );
-                                                
 
+                        const selectedPoints3D = this.get3DPointsFrom2DPoints( this.pointCloudPositionInWorld, points2dInScreen );
+                        
+                        if( selectedPoints3D.length > 1 ){
+                            const bbox = this.getBBoxBySelectedPoints( selectedPoints3D );
+                            this.editor.execute( new AddObjectCommand( this.editor, bbox ) );
+                        }
+
+                        this.clearCanvas();
+                        
                     }
                 }
 
@@ -100,6 +114,7 @@ class BoxAnnotater extends EventDispatcher {
      */
     set enabled(v){
 
+        this.pointCloudPositionInWorld = [];
         if( v === true ){
             this.getAll3DPoints();
         }
@@ -255,12 +270,27 @@ class BoxAnnotater extends EventDispatcher {
         return inside;
 
     }
-    hightLightPoints(){
+    getBBoxBySelectedPoints( selectedPoints ){
+
+        const geometry = new BufferGeometry();
+        const verticesArray = [];
+        selectedPoints.forEach(( point ) => {
+            verticesArray.push(point.x, point.y, point.z);
+        });
+        const vertices = new Float32Array( verticesArray );
+
+        geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
+        const material = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
+        const mesh = new THREE.Mesh( geometry, material );
+        return new BoxHelper( mesh, '#ff0000' );
 
     }
-    clear(){
+    clearCanvas(){
         this.ctx.clearRect( 0, 0, this.canvas.dom.width, this.canvas.dom.height );
         this.screenPositionArray = [];
+    }
+    clear(){
+        this.clearCanvas();
         this.pointCloudPositionInWorld = [];
     }
 
