@@ -47,7 +47,7 @@ class BoxAnnotater extends EventDispatcher {
                 if( e.button === 0 ){
 
                     const { x, y } = this.getMousePosition( e );
-                    this.drawCircle( x, y, 10 );
+                    this.drawCircle( x, y, 2);
     
                     if( this.screenPositionArray.length > 0 ){
 
@@ -69,6 +69,8 @@ class BoxAnnotater extends EventDispatcher {
                     if( this.screenPositionArray.length > 2 ){
 
                         const points2dInScreen = this.get2DPointsInScreen();
+                        console.log(points2dInScreen,'points2dInScreen');
+                        console.log(this.screenPositionArray,'screenPositionArray');
                         const selectedPoints = [];
                         points2dInScreen.forEach( ( point ) => {
                         
@@ -80,9 +82,11 @@ class BoxAnnotater extends EventDispatcher {
                         } );
 
                         const selectedPoints3D = this.get3DPointsFrom2DPoints( this.pointCloudPositionInWorld, selectedPoints );
-                        
+                        console.log(selectedPoints,'selected2D');
+                        console.log(selectedPoints3D,'selected3D');
                         if( selectedPoints3D.length > 1 ){
                             const bbox = this.getBBoxBySelectedPoints( selectedPoints3D );
+                            console.log(bbox, 'bbox');
                             this.editor.execute( new AddObjectCommand( this.editor, bbox ) );
                         }
 
@@ -261,8 +265,7 @@ class BoxAnnotater extends EventDispatcher {
             const xj = polygon[j].x;
             const yj = polygon[j].y;
 
-            const intersect = yi > y != yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi;
-
+            const intersect = ((yi <= y && y < yj) || (yj <= y && y < yi)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi) && (inside = !inside)
             if (intersect) {
                 inside = true;
             }
@@ -280,8 +283,8 @@ class BoxAnnotater extends EventDispatcher {
         const vertices = new Float32Array( verticesArray );
 
         geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
-        const material = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
-        const mesh = new THREE.Mesh( geometry, material );
+
+        const mesh = new THREE.Mesh( geometry );
         return new BoxHelper( mesh, '#ff0000' );
 
     }
