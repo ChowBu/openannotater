@@ -8,7 +8,7 @@
     "example": "examples"
   },
   "scripts": {
-    "dev": "servez -p 8081",
+    "dev": "servez -p 8082",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
