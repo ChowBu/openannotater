@@ -209,6 +209,7 @@ function Viewport( editor ) {
 		if ( onDownPosition.distanceTo( onUpPosition ) === 0 ) {
 
 			const intersects = getIntersects( onUpPosition );
+			console.log( intersects );
 
 			if ( intersects.length > 0 ) {
 

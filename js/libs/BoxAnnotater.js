@@ -69,8 +69,6 @@ class BoxAnnotater extends EventDispatcher {
                     if( this.screenPositionArray.length > 2 ){
 
                         const points2dInScreen = this.get2DPointsInScreen();
-                        console.log(points2dInScreen,'points2dInScreen');
-                        console.log(this.screenPositionArray,'screenPositionArray');
                         const selectedPoints = [];
                         points2dInScreen.forEach( ( point ) => {
                         
@@ -82,11 +80,8 @@ class BoxAnnotater extends EventDispatcher {
                         } );
 
                         const selectedPoints3D = this.get3DPointsFrom2DPoints( this.pointCloudPositionInWorld, selectedPoints );
-                        console.log(selectedPoints,'selected2D');
-                        console.log(selectedPoints3D,'selected3D');
                         if( selectedPoints3D.length > 1 ){
                             const bbox = this.getBBoxBySelectedPoints( selectedPoints3D );
-                            console.log(bbox, 'bbox');
                             this.editor.execute( new AddObjectCommand( this.editor, bbox ) );
                         }
 
