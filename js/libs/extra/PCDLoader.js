@@ -5,7 +5,9 @@ import {
 	Loader,
 	LoaderUtils,
 	Points,
-	PointsMaterial
+	PointsMaterial,
+	Color,
+	MeshBasicMaterial
 } from 'three';
 
 class PCDLoader extends Loader {
@@ -378,13 +380,27 @@ class PCDLoader extends Loader {
 
 		if ( position.length > 0 ) geometry.setAttribute( 'position', new Float32BufferAttribute( position, 3 ) );
 		if ( normal.length > 0 ) geometry.setAttribute( 'normal', new Float32BufferAttribute( normal, 3 ) );
-		if ( color.length > 0 ) geometry.setAttribute( 'color', new Float32BufferAttribute( color, 3 ) );
+		if ( color.length > 0 ) {
+
+			geometry.setAttribute( 'color', new Float32BufferAttribute( color, 3 ) );
+
+		} else {
+
+			position.forEach( ( ) => {
+
+				color.push( 1.0 );
+				
+			} );
+
+			geometry.setAttribute( 'color', new Float32BufferAttribute( color, 3 ) );
+
+		};
 
 		geometry.computeBoundingSphere();
 
 		// build material
 
-		const material = new PointsMaterial( { size: 0.005 } );
+		const material = new PointsMaterial( { size: 0.005, vertexColors: true } );
 
 		if ( color.length > 0 ) {
 

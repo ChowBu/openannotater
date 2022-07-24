@@ -6,7 +6,9 @@ import {
     Frustum, 
     Matrix4, 
     BoxHelper, 
-    BufferGeometry
+    BufferGeometry,
+    Float32BufferAttribute,
+    Color
 } from 'three';
 
 import { UIElement } from './ui.js';
@@ -83,6 +85,7 @@ class BoxAnnotater extends EventDispatcher {
                         if( selectedPoints3D.length > 1 ){
                             const bbox = this.getBBoxBySelectedPoints( selectedPoints3D );
                             this.editor.execute( new AddObjectCommand( this.editor, bbox ) );
+                            this.hightLightPoints( selectedPoints3D );
                         }
 
                         this.clearCanvas();
@@ -141,6 +144,27 @@ class BoxAnnotater extends EventDispatcher {
         document.getElementById( 'viewport' ).appendChild( container.dom );
     
         return container;
+    }
+    hightLightPoints(){
+        const points = this.editor.scene.getObjectByProperty('type','Points');
+
+        if( points ) {
+
+            const positionLength = points.geometry.attributes.position.count;
+            const color =  points.geometry.attributes.color;
+
+            for (let index = 0; index < positionLength; index++) {
+
+                color[index*3] = 0.90;
+                color[index*3 + 1] = 0.90;
+                color[index*3 + 2] = 0.0;
+                
+            }
+
+            const geometry = points.geometry.setAttribute( 'color', new Float32BufferAttribute( color, 3 ) );
+            
+        }
+
     }
     /**
      * draw circle in canvas 
